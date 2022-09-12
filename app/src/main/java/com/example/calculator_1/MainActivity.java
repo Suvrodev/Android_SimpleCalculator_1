@@ -5,9 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    RadioGroup radioGroup;
+    RadioButton radioButton,rb_on,rb_off;
 
     TextView InputText,OutputText;
     private Button b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b_c,b_percent,b_multiple,b_subtract,b_add,b_div,b_equal,b_power,b_point;
@@ -18,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         InputText= (TextView) findViewById(R.id.id_input_txt);
         OutputText= (TextView) findViewById(R.id.id_output_txt);
@@ -44,6 +55,41 @@ public class MainActivity extends AppCompatActivity {
         b_point= (Button) findViewById(R.id.id_point);
 
 
+
+        rb_off= (RadioButton) findViewById(R.id.id_off);
+        rb_on= (RadioButton) findViewById(R.id.id_on);
+
+
+        ///of when open app-->start--------------
+        radioGroup= (RadioGroup) findViewById(R.id.id_radiogroup);
+        int Select=radioGroup.getCheckedRadioButtonId();
+        radioButton=(RadioButton)findViewById(Select);
+        String Result_=radioButton.getText().toString();
+        if(Result_.equalsIgnoreCase("off")){
+            On_OFF(false);
+            InputText.setText("");
+            OutputText.setText("");
+        }else {
+            On_OFF(true);
+        }
+        //Off when open ap--->end---------------
+
+        rb_on.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                On_OFF(true);
+            }
+        });
+        rb_off.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                On_OFF(false);
+                InputText.setText("");
+                OutputText.setText("");
+            }
+        });
+
+
     }
 
     public void onButtonClick(View view){
@@ -54,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 Input=null;
                 Output=null;
                 NewOutput=null;
-                OutputText.setText("");
+                OutputText.setText("0");
                 break;
 
             case "^":
@@ -75,6 +121,11 @@ public class MainActivity extends AppCompatActivity {
                 double d=Double.parseDouble(InputText.getText().toString())/100;
                 OutputText.setText(String.valueOf(d));
                 break;
+            case "0":
+                if(InputText.getText().equals("")){}else {
+                    Input+="0";
+                }
+                break;
             default:
                 if(Input==null){
                     Input="";
@@ -82,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 if(Data.equals("+") || Data.equals("/") || Data.equals("-")){
                     solve();
                 }
+                ///I mean if any digit
                 Input+=Data;
 
 
@@ -91,10 +143,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void solve(){
+        DecimalFormat decimalFormat=new DecimalFormat("#.######");
+
         if(Input.split("\\+").length==2){
            String numbers[]=Input.split("\\+");
            try {
                double d = Double.parseDouble(numbers[0]) + Double.parseDouble(numbers[1]);
+               String d_value=decimalFormat.format(d);
+               d=Double.parseDouble(d_value);
                Output = Double.toString(d);
                NewOutput=CutDecimal(Output);
 
@@ -109,9 +165,11 @@ public class MainActivity extends AppCompatActivity {
            String numbers[]=Input.split("\\*");
            try {
                double d = Double.parseDouble(numbers[0]) * Double.parseDouble(numbers[1]);
+               String d_value=decimalFormat.format(d);
+               d=Double.parseDouble(d_value);
+
                Output = Double.toString(d);
                NewOutput=CutDecimal(Output);
-
                OutputText.setText(NewOutput);
                Input = d + "";
            }catch (Exception e){
@@ -120,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(Input.split("\\/").length==2){
-           String numbers[]=Input.split("\\/");
+           String[] numbers=Input.split("\\/");
            try {
                double d = Double.parseDouble(numbers[0]) / Double.parseDouble(numbers[1]);
                Output = Double.toString(d);
@@ -163,13 +221,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String CutDecimal(String number){
+        double double_number=0;
+        String Number="";
         String n[]=number.split("\\.");
         if(n.length>1){
             if(n[1].equals("0")){
                 number=n[0];
             }
+//            else {
+//                String str=n[0]+n[1];
+//                Number=decimalFormat.format(str);
+//            }
         }
 
         return number;
+    }
+
+    String OnMoreOperator(String str){
+        return  str;
+    }
+
+
+    void On_OFF(boolean result){
+        b0.setEnabled(result);
+        b1.setEnabled(result);
+        b2.setEnabled(result);
+        b3.setEnabled(result);
+        b4.setEnabled(result);
+        b5.setEnabled(result);
+        b6.setEnabled(result);
+        b7.setEnabled(result);
+        b8.setEnabled(result);
+        b9.setEnabled(result);
+        b_c.setEnabled(result);
+        b_point.setEnabled(result);
+        b_percent.setEnabled(result);
+        b_power.setEnabled(result);
+        b_equal.setEnabled(result);
+        b_add.setEnabled(result);
+        b_subtract.setEnabled(result);
+        b_div.setEnabled(result);
+        b0.setEnabled(result);
+        b_multiple.setEnabled(result);
     }
 }
