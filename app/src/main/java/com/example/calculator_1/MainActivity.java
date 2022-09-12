@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,12 +17,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     RadioGroup radioGroup;
-    RadioButton radioButton,rb_on,rb_off;
+    RadioButton radioButton, rb_on, rb_off;
 
-    TextView InputText,OutputText;
-    private Button b0,b1,b2,b3,b4,b5,b6,b7,b8,b9,b_c,b_percent,b_multiple,b_subtract,b_add,b_div,b_equal,b_power,b_point;
+    TextView InputText, OutputText;
+    private Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b_c, b_percent, b_multiple, b_subtract, b_add, b_div, b_equal, b_power, b_point;
 
-    String Input,Output,NewOutput;
+    String Input, Output, NewOutput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,47 +30,45 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        InputText = (TextView) findViewById(R.id.id_input_txt);
+        OutputText = (TextView) findViewById(R.id.id_output_txt);
 
-        InputText= (TextView) findViewById(R.id.id_input_txt);
-        OutputText= (TextView) findViewById(R.id.id_output_txt);
-
-        b0= (Button) findViewById(R.id.id_0);
-        b1= (Button) findViewById(R.id.id_1);
-        b2= (Button) findViewById(R.id.id_2);
-        b3= (Button) findViewById(R.id.id_3);
-        b4= (Button) findViewById(R.id.id_4);
-        b5= (Button) findViewById(R.id.id_5);
-        b6= (Button) findViewById(R.id.id_6);
-        b7= (Button) findViewById(R.id.id_7);
-        b8= (Button) findViewById(R.id.id_8);
-        b9= (Button) findViewById(R.id.id_9);
-        b_c= (Button) findViewById(R.id.id_c);
-        b_percent= (Button) findViewById(R.id.id_percent);
-        b_power= (Button) findViewById(R.id.id_power);
-        b_multiple= (Button) findViewById(R.id.id_mul);
-        b_div= (Button) findViewById(R.id.id_div);
-        b_subtract= (Button) findViewById(R.id.id_sub);
-        b_add= (Button) findViewById(R.id.id_add);
-        b_equal= (Button) findViewById(R.id.id_equal);
-        b_power= (Button) findViewById(R.id.id_power);
-        b_point= (Button) findViewById(R.id.id_point);
-
+        b0 = (Button) findViewById(R.id.id_0);
+        b1 = (Button) findViewById(R.id.id_1);
+        b2 = (Button) findViewById(R.id.id_2);
+        b3 = (Button) findViewById(R.id.id_3);
+        b4 = (Button) findViewById(R.id.id_4);
+        b5 = (Button) findViewById(R.id.id_5);
+        b6 = (Button) findViewById(R.id.id_6);
+        b7 = (Button) findViewById(R.id.id_7);
+        b8 = (Button) findViewById(R.id.id_8);
+        b9 = (Button) findViewById(R.id.id_9);
+        b_c = (Button) findViewById(R.id.id_c);
+        b_percent = (Button) findViewById(R.id.id_percent);
+        b_power = (Button) findViewById(R.id.id_power);
+        b_multiple = (Button) findViewById(R.id.id_mul);
+        b_div = (Button) findViewById(R.id.id_div);
+        b_subtract = (Button) findViewById(R.id.id_sub);
+        b_add = (Button) findViewById(R.id.id_add);
+        b_equal = (Button) findViewById(R.id.id_equal);
+        b_power = (Button) findViewById(R.id.id_power);
+        b_point = (Button) findViewById(R.id.id_point);
 
 
-        rb_off= (RadioButton) findViewById(R.id.id_off);
-        rb_on= (RadioButton) findViewById(R.id.id_on);
+        rb_off = (RadioButton) findViewById(R.id.id_off);
+        rb_on = (RadioButton) findViewById(R.id.id_on);
 
 
         ///of when open app-->start--------------
-        radioGroup= (RadioGroup) findViewById(R.id.id_radiogroup);
-        int Select=radioGroup.getCheckedRadioButtonId();
-        radioButton=(RadioButton)findViewById(Select);
-        String Result_=radioButton.getText().toString();
-        if(Result_.equalsIgnoreCase("off")){
+        radioGroup = (RadioGroup) findViewById(R.id.id_radiogroup);
+        int Select = radioGroup.getCheckedRadioButtonId();
+        radioButton = (RadioButton) findViewById(Select);
+        String Result_ = radioButton.getText().toString();
+        if (Result_.equalsIgnoreCase("off")) {
             On_OFF(false);
             InputText.setText("");
             OutputText.setText("");
-        }else {
+        } else {
             On_OFF(true);
         }
         //Off when open ap--->end---------------
@@ -89,60 +88,282 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        b_c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputText.setText("");
+                OutputText.setText("");
+            }
+        });
+
+        b0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                if (Take_text.equalsIgnoreCase("")) {
+
+                } else {
+                    Take_text += 0;
+                }
+                InputText.setText(Take_text);
+            }
+        });
+
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                Take_text += 1;
+                InputText.setText(Take_text);
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                Take_text += 2;
+                InputText.setText(Take_text);
+            }
+        });
+        b3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                Take_text += 3;
+                InputText.setText(Take_text);
+            }
+        });
+        b4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                Take_text += 4;
+                InputText.setText(Take_text);
+            }
+        });
+        b5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                Take_text += 5;
+                InputText.setText(Take_text);
+            }
+        });
+
+        b6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                Take_text += 6;
+                InputText.setText(Take_text);
+            }
+        });
+
+        b7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                Take_text += 7;
+                InputText.setText(Take_text);
+            }
+        });
+        b8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                Take_text += 8;
+                InputText.setText(Take_text);
+            }
+        });
+        b9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_text = InputText.getText().toString();
+                Take_text += 9;
+                InputText.setText(Take_text);
+            }
+        });
+        b_point.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int chek_pont = 0;
+                String Take_Text = InputText.getText().toString();
+                for (int i = 0; i < Take_Text.length(); i++) {
+                    if (Take_Text.charAt(i) == '.') {
+                        chek_pont++;
+                        break;
+                    }
+                }
+
+                if (chek_pont == 0) {
+                    Take_Text += ".";
+                    InputText.setText(Take_Text);
+                }
+            }
+        });
+        b_percent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_Text = InputText.getText().toString();
+                if (Take_Text.equals("")) {
+                } else {
+                    double Take_Text_ = Double.parseDouble(Take_Text);
+                    Take_Text_ = Take_Text_ / 100;
+                    OutputText.setText(Take_Text_ + "");
+                }
+            }
+        });
+
+        b_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_Text = InputText.getText().toString();
+                String str = ChekFunction(Take_Text, '+');
+                InputText.setText(str);
+            }
+        });
+        b_subtract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_Text = InputText.getText().toString();
+                String str = ChekFunction(Take_Text, '-');
+                InputText.setText(str);
+            }
+        });
+        b_multiple.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_Text = InputText.getText().toString();
+                String str = ChekFunction(Take_Text, '*');
+                InputText.setText(str);
+            }
+        });
+        b_div.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_Text = InputText.getText().toString();
+                String str = ChekFunction(Take_Text, '/');
+                InputText.setText(str);
+            }
+        });
+
+        b_equal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int y=0;
+                String Take_Text = InputText.getText().toString();
+                int Length=(Take_Text.length())-1;
+                if(Take_Text.equalsIgnoreCase("")){
+                    OutputText.setText("0");
+                }else {
+
+                    if (Take_Text.charAt(Length) == '+' || Take_Text.charAt(Length) == '-' || Take_Text.charAt(Length) == '*' || Take_Text.charAt(Length) == '/') {
+                        Take_Text = Take_Text.substring(0, Length);
+                        OutputText.setText(Take_Text);
+                    }
+                    else if (Take_Text.charAt(Length) == '0' || Take_Text.charAt(Length) == '1' || Take_Text.charAt(Length) == '2' || Take_Text.charAt(Length) == '3' || Take_Text.charAt(Length) == '3'
+                            || Take_Text.charAt(Length) == '4' || Take_Text.charAt(Length) == '5' || Take_Text.charAt(Length) == '5' || Take_Text.charAt(Length) == '6' || Take_Text.charAt(Length) == '7'
+                            || Take_Text.charAt(Length) == '8' || Take_Text.charAt(Length) == '9') {
+
+                        OutputText.setText(Take_Text);
+
+                    }
+                    for(int i=0;i<Take_Text.length();i++){
+                        if(Take_Text.charAt(i)=='+' || Take_Text.charAt(i)=='-' || Take_Text.charAt(i)=='*' || Take_Text.charAt(i)=='/' ){
+                            y++;
+                        }
+                    }
+
+
+                    if(y>0){
+                        String Ans= Solve1(Take_Text);
+                        OutputText.setText(Ans);
+                    }
+                }
+
+//               for(int i=0;i<Take_Text.length();i++){
+//                   if(Take_Text.charAt(i)=='+' || Take_Text.charAt(i)=='-' || Take_Text.charAt(i)=='*' || Take_Text.charAt(i)=='/' ){
+//                       y++;
+//                   }
+//               }
+//
+//
+//               if(y>0){
+//                   String Ans= Solve1(Take_Text);
+//                   OutputText.setText(Ans);
+//               }
+
+            }
+        });
+
 
     }
 
-    public void onButtonClick(View view){
-        Button button=(Button) view;
-        String Data=button.getText().toString();
-        switch (Data){
-            case "C":
-                Input=null;
-                Output=null;
-                NewOutput=null;
-                OutputText.setText("0");
+    String ChekFunction(String Take_Text, char operator) {
+        int Chek = 0;
+        for (int i = 0; i < Take_Text.length(); i++) {
+            if (Take_Text.charAt(i) == '+' || Take_Text.charAt(i) == '-' || Take_Text.charAt(i) == '*' || Take_Text.charAt(i) == '/') {
+                Chek++;
                 break;
-
-            case "^":
-                solve();
-                Input+="^";
-
-                break;
-            case "*":
-                solve();
-                Input+="*";
-
-                break;
-            case "=":
-                solve();
-                break;
-            case "%":
-                Input+="%";
-                double d=Double.parseDouble(InputText.getText().toString())/100;
-                OutputText.setText(String.valueOf(d));
-                break;
-            case "0":
-                if(InputText.getText().equals("")){}else {
-                    Input+="0";
-                }
-                break;
-            default:
-                if(Input==null){
-                    Input="";
-                }
-                if(Data.equals("+") || Data.equals("/") || Data.equals("-")){
-                    solve();
-                }
-                ///I mean if any digit
-                Input+=Data;
-
-
-
+            }
         }
-        InputText.setText(Input);
+        if (Chek == 0) {
+            Take_Text += operator;
+        } else {
+            String xx = Solve1(Take_Text);
+            Take_Text = xx;
+            OutputText.setText(Take_Text);
+        }
+        return Take_Text;
     }
 
-    private void solve(){
+    private String Solve1(String Take_Text) {
+        double d = 0;
+        if (Take_Text.split("\\+").length == 2) {
+            String[] Numbers = Take_Text.split("\\+");
+            try {
+                d = Double.parseDouble(Numbers[0]) + Double.parseDouble(Numbers[1]);
+            } catch (Exception e) {
+                OutputText.setError(e.getMessage().toString());
+            }
+        }
+
+
+        if (Take_Text.split("\\-").length == 2) {
+            String[] Numbers = Take_Text.split("\\-");
+            try {
+                d = Double.parseDouble(Numbers[0]) - Double.parseDouble(Numbers[1]);
+            } catch (Exception e) {
+                OutputText.setError(e.getMessage().toString());
+            }
+        }
+
+
+        if (Take_Text.split("\\*").length == 2) {
+            String[] Numbers = Take_Text.split("\\+");
+            try {
+                d = Double.parseDouble(Numbers[0]) * Double.parseDouble(Numbers[1]);
+            } catch (Exception e) {
+                OutputText.setError(e.getMessage().toString());
+            }
+        }
+
+
+        if (Take_Text.split("\\/").length == 2) {
+            String[] Numbers = Take_Text.split("\\/");
+            try {
+                d = Double.parseDouble(Numbers[0]) / Double.parseDouble(Numbers[1]);
+            } catch (Exception e) {
+                OutputText.setError(e.getMessage().toString());
+            }
+        }
+        return String.valueOf(d);
+    }
+
+
+
+
+    private void solve(String Input){
         DecimalFormat decimalFormat=new DecimalFormat("#.######");
 
         if(Input.split("\\+").length==2){
@@ -238,6 +459,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     String OnMoreOperator(String str){
+        int Length=((str.length())-1);
+        if(str.charAt(Length)=='+' || str.charAt(Length)=='-' || str.charAt(Length)=='*' || str.charAt(Length)=='/'){
+            str=str.substring(0,2);
+        }
         return  str;
     }
 
