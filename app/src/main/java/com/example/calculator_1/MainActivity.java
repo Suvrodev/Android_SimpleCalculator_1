@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     RadioButton radioButton, rb_on, rb_off;
 
     TextView InputText, OutputText;
-    private Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b_c, b_percent, b_multiple, b_subtract, b_add, b_div, b_equal, b_power, b_point;
+    private Button b0, b1, b2, b3, b4, b5, b6, b7, b8, b9, b_c, b_percent, b_multiple, b_subtract, b_add, b_div, b_equal, b_power, b_point,b_root,b_00_0;
 
     String Input, Output, NewOutput;
 
@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         b_equal = (Button) findViewById(R.id.id_equal);
         b_power = (Button) findViewById(R.id.id_power);
         b_point = (Button) findViewById(R.id.id_point);
+        b_root= (Button) findViewById(R.id.id_root);
+        b_00_0= (Button) findViewById(R.id.id_00_0);
 
 
         rb_off = (RadioButton) findViewById(R.id.id_off);
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 On_OFF(true);
+                OutputText.setText("0");
             }
         });
         rb_off.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +96,30 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 InputText.setText("");
                 OutputText.setText("");
+            }
+        });
+        b_00_0.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_Text=InputText.getText().toString();
+                int Length=((Take_Text.length())-1);
+                if(Take_Text.equalsIgnoreCase("")){}else {
+                    Take_Text=Take_Text.substring(0,Length);
+                    InputText.setText(Take_Text);
+                }
+            }
+        });
+        b_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_Text=InputText.getText().toString();
+                int Length= ((Take_Text.length())-1);
+                if (Take_Text.equalsIgnoreCase("")) {} else {
+                    double Take_Text_ = Double.parseDouble(Take_Text);
+                    Take_Text_ = Math.sqrt(Take_Text_);
+                    OutputText.setText(Take_Text_ + "");
+                    InputText.setText(Take_Text_+"");
+                }
             }
         });
 
@@ -218,32 +245,50 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String Take_Text = InputText.getText().toString();
-                String str = ChekFunction(Take_Text, '+');
-                InputText.setText(str);
+                if(Take_Text.equalsIgnoreCase("")){}else {
+                    String str = ChekFunction(Take_Text, '+');
+                    InputText.setText(str);
+                }
             }
         });
         b_subtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String Take_Text = InputText.getText().toString();
-                String str = ChekFunction(Take_Text, '-');
-                InputText.setText(str);
+                if(Take_Text.equalsIgnoreCase("")){}else {
+                    String str = ChekFunction(Take_Text, '-');
+                    InputText.setText(str);
+                }
             }
         });
         b_multiple.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String Take_Text = InputText.getText().toString();
-                String str = ChekFunction(Take_Text, '*');
-                InputText.setText(str);
+                if(Take_Text.equalsIgnoreCase("")){}else {
+                    String str = ChekFunction(Take_Text, '*');
+                    InputText.setText(str);
+                }
             }
         });
         b_div.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String Take_Text = InputText.getText().toString();
-                String str = ChekFunction(Take_Text, '/');
-                InputText.setText(str);
+                if(Take_Text.equalsIgnoreCase("")){}else {
+                    String str = ChekFunction(Take_Text, '/');
+                    InputText.setText(str);
+                }
+            }
+        });
+        b_power.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Take_Text = InputText.getText().toString();
+                if(Take_Text.equalsIgnoreCase("")){}else {
+                    String str=ChekFunction(Take_Text,'^');
+                    InputText.setText(str);
+                }
             }
         });
 
@@ -257,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
                     OutputText.setText("0");
                 }else {
 
-                    if (Take_Text.charAt(Length) == '+' || Take_Text.charAt(Length) == '-' || Take_Text.charAt(Length) == '*' || Take_Text.charAt(Length) == '/') {
+                    if (Take_Text.charAt(Length) == '+' || Take_Text.charAt(Length) == '-' || Take_Text.charAt(Length) == '*' || Take_Text.charAt(Length) == '/' || Take_Text.charAt(Length) == '^') {
                         Take_Text = Take_Text.substring(0, Length);
                         OutputText.setText(Take_Text);
                     }
@@ -269,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                     for(int i=0;i<Take_Text.length();i++){
-                        if(Take_Text.charAt(i)=='+' || Take_Text.charAt(i)=='-' || Take_Text.charAt(i)=='*' || Take_Text.charAt(i)=='/' ){
+                        if(Take_Text.charAt(i)=='+' || Take_Text.charAt(i)=='-' || Take_Text.charAt(i)=='*' || Take_Text.charAt(i)=='/'|| Take_Text.charAt(i)=='^' ){
                             y++;
                         }
                     }
@@ -281,18 +326,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-//               for(int i=0;i<Take_Text.length();i++){
-//                   if(Take_Text.charAt(i)=='+' || Take_Text.charAt(i)=='-' || Take_Text.charAt(i)=='*' || Take_Text.charAt(i)=='/' ){
-//                       y++;
-//                   }
-//               }
-//
-//
-//               if(y>0){
-//                   String Ans= Solve1(Take_Text);
-//                   OutputText.setText(Ans);
-//               }
-
             }
         });
 
@@ -300,21 +333,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     String ChekFunction(String Take_Text, char operator) {
-        int Chek = 0;
+        int Check = 0;
+
         for (int i = 0; i < Take_Text.length(); i++) {
-            if (Take_Text.charAt(i) == '+' || Take_Text.charAt(i) == '-' || Take_Text.charAt(i) == '*' || Take_Text.charAt(i) == '/') {
-                Chek++;
+            if (Take_Text.charAt(i) == '+' || Take_Text.charAt(i) == '-' || Take_Text.charAt(i) == '*' || Take_Text.charAt(i) == '/'|| Take_Text.charAt(i) == '^') {
+                Check++;
                 break;
             }
         }
-        if (Chek == 0) {
+        if (Check == 0) {
             Take_Text += operator;
+            return Take_Text;
         } else {
             String xx = Solve1(Take_Text);
             Take_Text = xx;
             OutputText.setText(Take_Text);
+            return Take_Text+operator;
         }
-        return Take_Text;
+
     }
 
     private String Solve1(String Take_Text) {
@@ -340,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (Take_Text.split("\\*").length == 2) {
-            String[] Numbers = Take_Text.split("\\+");
+            String[] Numbers = Take_Text.split("\\*");
             try {
                 d = Double.parseDouble(Numbers[0]) * Double.parseDouble(Numbers[1]);
             } catch (Exception e) {
@@ -353,6 +389,14 @@ public class MainActivity extends AppCompatActivity {
             String[] Numbers = Take_Text.split("\\/");
             try {
                 d = Double.parseDouble(Numbers[0]) / Double.parseDouble(Numbers[1]);
+            } catch (Exception e) {
+                OutputText.setError(e.getMessage().toString());
+            }
+        }
+        if (Take_Text.split("\\^").length == 2) {
+            String[] Numbers = Take_Text.split("\\^");
+            try {
+                d = Math.pow(Double.parseDouble(Numbers[0]) , Double.parseDouble(Numbers[1]));
             } catch (Exception e) {
                 OutputText.setError(e.getMessage().toString());
             }
