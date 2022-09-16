@@ -16,6 +16,7 @@ import java.text.DecimalFormat;
 public class MainActivity extends AppCompatActivity {
 
 
+    DecimalFormat decimalFormat=new DecimalFormat("#.#########");
     RadioGroup radioGroup;
     RadioButton radioButton, rb_on, rb_off;
 
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 InputText.setText("");
-                OutputText.setText("");
+                OutputText.setText("0");
             }
         });
         b_00_0.setOnClickListener(new View.OnClickListener() {
@@ -214,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int chek_pont = 0;
+                int Sign_=0;
                 String Take_Text = InputText.getText().toString();
                 for (int i = 0; i < Take_Text.length(); i++) {
                     if (Take_Text.charAt(i) == '.') {
@@ -225,6 +227,29 @@ public class MainActivity extends AppCompatActivity {
                 if (chek_pont == 0) {
                     Take_Text += ".";
                     InputText.setText(Take_Text);
+                }else {
+                    Take_Text = InputText.getText().toString();
+                    for (int i = 0; i < Take_Text.length(); i++) {
+                        if (Take_Text.charAt(i) == '+' || Take_Text.charAt(i) == '-' || Take_Text.charAt(i) == '*' || Take_Text.charAt(i) == '/') {
+                            Sign_++;
+                            break;
+                        }
+                    }
+                    if(Sign_==1){
+                        int Check_Point__=0;
+                        Take_Text = InputText.getText().toString();
+                        for (int i = 0; i < Take_Text.length(); i++) {
+                            if (Take_Text.charAt(i) == '.') {
+                                Check_Point__++;
+                                //break;
+                            }
+                        }
+                        if(Check_Point__==0 || Check_Point__==1){
+                            Take_Text+=".";
+                            InputText.setText(Take_Text);   //নেশার ঘোরে করতেছি, কি করতেছি জানি না
+                        }
+
+                    }
                 }
             }
         });
@@ -334,7 +359,6 @@ public class MainActivity extends AppCompatActivity {
 
     String ChekFunction(String Take_Text, char operator) {
         int Check = 0;
-
         for (int i = 0; i < Take_Text.length(); i++) {
             if (Take_Text.charAt(i) == '+' || Take_Text.charAt(i) == '-' || Take_Text.charAt(i) == '*' || Take_Text.charAt(i) == '/'|| Take_Text.charAt(i) == '^') {
                 Check++;
@@ -347,6 +371,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             String xx = Solve1(Take_Text);
             Take_Text = xx;
+            Take_Text=decimalFormat.format(Double.parseDouble(Take_Text));
             OutputText.setText(Take_Text);
             return Take_Text+operator;
         }
@@ -401,14 +426,16 @@ public class MainActivity extends AppCompatActivity {
                 OutputText.setError(e.getMessage().toString());
             }
         }
-        return String.valueOf(d);
+
+        String Return_String=decimalFormat.format(d);
+        return Return_String;
     }
 
 
 
 
     private void solve(String Input){
-        DecimalFormat decimalFormat=new DecimalFormat("#.######");
+       // DecimalFormat decimalFormat=new DecimalFormat("#.######");
 
         if(Input.split("\\+").length==2){
            String numbers[]=Input.split("\\+");
@@ -419,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
                Output = Double.toString(d);
                NewOutput=CutDecimal(Output);
 
-               OutputText.setText(NewOutput);
+               OutputText.setText("+ SOlve");
                Input = d + "";
            }catch (Exception e){
                OutputText.setError(e.getMessage().toString());
@@ -435,7 +462,9 @@ public class MainActivity extends AppCompatActivity {
 
                Output = Double.toString(d);
                NewOutput=CutDecimal(Output);
-               OutputText.setText(NewOutput);
+
+               NewOutput=decimalFormat.format(Double.parseDouble(NewOutput));  ///For show 3 digit after point
+               OutputText.setText("OK1");
                Input = d + "";
            }catch (Exception e){
                OutputText.setError(e.getMessage().toString());
@@ -486,17 +515,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String CutDecimal(String number){
-        double double_number=0;
-        String Number="";
+       // double double_number=0;
+       // String Number="";
         String n[]=number.split("\\.");
-        if(n.length>1){
+        if(n.length>0){
             if(n[1].equals("0")){
                 number=n[0];
             }
-//            else {
-//                String str=n[0]+n[1];
-//                Number=decimalFormat.format(str);
-//            }
         }
 
         return number;
@@ -532,5 +557,6 @@ public class MainActivity extends AppCompatActivity {
         b_div.setEnabled(result);
         b0.setEnabled(result);
         b_multiple.setEnabled(result);
+        b_00_0.setEnabled(result);
     }
 }
